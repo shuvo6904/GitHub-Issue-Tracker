@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">GitHub Issue Tracker</string>
+    <string name="hang_on_loading_content">Hang on, loading content</string>
+    <string name="could_not_load_content">Could not load content</string>
+    <string name="Retry">Retry</string>
+    <string name="search">Search</string>
+    <string name="search_all_issues">Search all issues</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
