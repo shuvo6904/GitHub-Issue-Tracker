@@ -16,13 +16,7 @@ class GitHubIssueDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGitHubIssueDetailsBinding.inflate(layoutInflater)
-        //enableEdgeToEdge()
         setContentView(binding.root)
-        /*ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }*/
 
         initViews()
         initListeners()
@@ -47,7 +41,8 @@ class GitHubIssueDetailsActivity : AppCompatActivity() {
                 name.text = issue.user?.login ?: ""
                 binding.state.text = getString(R.string.issue_state, issue.state ?: "")
                 binding.commentsCount.text = getString(R.string.issue_comments, issue.comments ?: 0)
-                binding.createdAt.text = getString(R.string.issue_created_at, issue.createdAt?.formatToDate() ?: "")
+                binding.createdAt.text =
+                    getString(R.string.issue_created_at, issue.createdAt?.formatToDate() ?: "")
                 Markwon.create(this@GitHubIssueDetailsActivity).setMarkdown(body, issue.body ?: "")
             }
         }

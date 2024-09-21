@@ -1,7 +1,8 @@
 package com.example.githubissuetracker.utils
 
-object  Constants {
+object Constants {
     const val BASE_URL = "https://api.github.com/"
+    // Put your github personal access token
     const val GITHUB_PERSONAL_TOKEN = "your_github_personal_token"
     const val ISSUES_SEARCH = "search/issues"
     const val REPOSITORIES_SEARCH = "search/repositories"

@@ -44,14 +44,8 @@ class RepositoryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
-        //enableEdgeToEdge()
         binding = ActivityRepositoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        /*ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }*/
 
         initViews()
         fetchData()
@@ -68,7 +62,8 @@ class RepositoryActivity : AppCompatActivity() {
             )
 
             // Add a custom divider RecyclerViewItemDecoration
-            val customDivider = RecyclerViewItemDecoration(recyclerview.context, R.drawable.item_divider)
+            val customDivider =
+                RecyclerViewItemDecoration(recyclerview.context, R.drawable.item_divider)
             recyclerview.addItemDecoration(customDivider)
 
             lifecycleScope.launch {
@@ -81,7 +76,8 @@ class RepositoryActivity : AppCompatActivity() {
                     // Handle visibility
                     progressBar.isVisible = isLoading
                     recyclerview.isVisible = isNotLoading
-                    noRepositoriesFound.isVisible = isNotLoading && gitHubRepositoryAdapter.itemCount == 0
+                    noRepositoriesFound.isVisible =
+                        isNotLoading && gitHubRepositoryAdapter.itemCount == 0
 
                     // Handle error state and retry layout visibility
                     layoutRetry.root.isVisible = isError
@@ -110,6 +106,7 @@ class RepositoryActivity : AppCompatActivity() {
         binding.apply {
             btnSearchIcon.setOnClickListener {
                 currentFocus?.let { hideKeyboard(it) }
+                edtSearch.clearFocus()
                 recyclerview.scrollToPosition(0)
                 fetchData()
             }
