@@ -36,7 +36,7 @@
                 android:focusableInTouchMode="true"
                 android:fontFamily="@font/roboto_regular"
                 android:gravity="center_vertical"
-                android:hint="@string/search_all_issues"
+                android:hint="@string/search_all_repositories"
                 android:importantForAutofill="no"
                 android:inputType="text"
                 android:maxLines="1"
