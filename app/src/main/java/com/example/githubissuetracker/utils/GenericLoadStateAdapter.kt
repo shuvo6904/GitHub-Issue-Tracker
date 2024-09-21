@@ -43,13 +43,9 @@ class GenericLoadStateAdapter(
                 errorLayout.isVisible = isError
                 if (isError) {
                     val error = (loadState as LoadState.Error).error
-                    //errorMsg.text = error.message
-                    //errorMsg.text = error.message
-                    errorMsg.text = "error.message and no internet connection found in your phone. please try to connect internet or trun on wifi of your home"
+                    errorMsg.text = error.message
                 }
             }
-            /*binding.loadingLayout.isVisible = loadState is LoadState.Loading
-            binding.errorLayout.isVisible = loadState is LoadState.Error*/
         }
     }
 
