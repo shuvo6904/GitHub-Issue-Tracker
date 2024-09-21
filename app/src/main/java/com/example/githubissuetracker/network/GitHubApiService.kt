@@ -2,7 +2,7 @@ package com.example.githubissuetracker.network
 
 import com.example.githubissuetracker.Constants
 import com.example.githubissuetracker.network.model.github_repository.GitHubRepositoryResponse
-import com.example.githubissuetracker.network.model.search_issue.GitHubIssuesSearchResponse
+import com.example.githubissuetracker.network.model.github_issue.GitHubIssuesSearchResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

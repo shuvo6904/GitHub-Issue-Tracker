@@ -6,7 +6,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.githubissuetracker.network.AppRepository
 import com.example.githubissuetracker.network.model.github_repository.GitHubRepositoryResponse
-import com.example.githubissuetracker.network.model.search_issue.Item
+import com.example.githubissuetracker.network.model.github_issue.Item
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

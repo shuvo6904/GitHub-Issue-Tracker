@@ -7,10 +7,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubissuetracker.R
 import com.example.githubissuetracker.databinding.ItemGithubIssueBinding
-import com.example.githubissuetracker.network.model.search_issue.Item
+import com.example.githubissuetracker.network.model.github_issue.Item
 import com.example.githubissuetracker.utils.formatToDate
 import com.example.githubissuetracker.utils.loadImage
-import io.noties.markwon.Markwon
 
 class GithubIssueAdapter(
     private val onItemClicked: (Item) -> Unit

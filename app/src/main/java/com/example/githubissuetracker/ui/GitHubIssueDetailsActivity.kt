@@ -1,14 +1,11 @@
 package com.example.githubissuetracker.ui
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.githubissuetracker.Constants
 import com.example.githubissuetracker.R
 import com.example.githubissuetracker.databinding.ActivityGitHubIssueDetailsBinding
-import com.example.githubissuetracker.network.model.search_issue.Item
+import com.example.githubissuetracker.network.model.github_issue.Item
 import com.example.githubissuetracker.utils.formatToDate
 import com.example.githubissuetracker.utils.getParcelableExtraCompat
 import com.example.githubissuetracker.utils.loadImage

@@ -4,7 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.githubissuetracker.Constants
 import com.example.githubissuetracker.network.GitHubApiService
-import com.example.githubissuetracker.network.model.search_issue.Item
+import com.example.githubissuetracker.network.model.github_issue.Item
 
 class GitHubIssuePagingSource(
     private val apiService: GitHubApiService,
