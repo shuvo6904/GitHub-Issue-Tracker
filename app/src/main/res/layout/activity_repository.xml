@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_gray"
-    tools:context=".ui.GitHubIssueActivity">
-
+    tools:context=".ui.repository.RepositoryActivity">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -16,26 +15,12 @@
         android:paddingVertical="@dimen/_5sdp"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/backBtn"
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:foreground="?attr/selectableItemBackground"
-            android:src="@drawable/ic_arrow_back"
-            app:layout_constraintBottom_toBottomOf="@+id/searchLayout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/searchLayout"
-            app:tint="@android:color/white" />
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/searchLayout"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginStart="@dimen/_5sdp"
             android:background="@drawable/bg_rectangle_search"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/backBtn"
             app:layout_constraintTop_toTopOf="parent">
 
             <EditText
@@ -59,10 +44,8 @@
                 android:textColor="@color/black"
                 android:textColorHint="@color/black_60"
                 android:textSize="@dimen/_13ssp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btnSearchIcon"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
                 android:id="@+id/btnSearchIcon"
@@ -82,9 +65,8 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
     <TextView
-        android:id="@+id/issueListText"
+        android:id="@+id/repositoryListText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_12sdp"
@@ -93,8 +75,7 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/_16ssp"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        tools:text="Issue List: flutter/flutter" />
-
+        tools:text="Repository List: flutter" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
@@ -104,24 +85,24 @@
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/issueListText"
+        app:layout_constraintTop_toBottomOf="@+id/repositoryListText"
         tools:itemCount="20"
-        tools:listitem="@layout/item_github_issue"
+        tools:listitem="@layout/item_github_repositoroy"
         tools:visibility="visible" />
 
     <TextView
-        android:id="@+id/noIssuesAvailable"
+        android:id="@+id/noRepositoriesFound"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
         android:gravity="center"
         android:paddingHorizontal="@dimen/_12sdp"
-        android:text="@string/no_issues_available"
+        android:text="@string/no_repositories_available"
         android:textColor="@android:color/white"
         android:textSize="@dimen/_12ssp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/issueListText" />
+        app:layout_constraintTop_toBottomOf="@+id/repositoryListText" />
 
     <include
         android:id="@+id/layoutRetry"
@@ -131,7 +112,7 @@
         android:visibility="gone"
         android:layout_marginHorizontal="@dimen/_12sdp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/issueListText" />
+        app:layout_constraintTop_toBottomOf="@+id/repositoryListText" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -141,6 +122,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/issueListText"
+        app:layout_constraintTop_toBottomOf="@+id/repositoryListText"
         tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

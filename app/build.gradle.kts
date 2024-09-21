@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.ksp)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -85,5 +86,8 @@ dependencies {
     // Glide
     ksp (libs.ksp)
     implementation (libs.glide)
+
+    // Lottie
+    implementation (libs.lottie)
 
 }

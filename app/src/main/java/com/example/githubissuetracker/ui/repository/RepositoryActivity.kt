@@ -1,6 +1,5 @@
-package com.example.githubissuetracker.ui
+package com.example.githubissuetracker.ui.repository
 
-import com.example.githubissuetracker.utils.RecyclerViewItemDecoration
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -9,8 +8,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.example.githubissuetracker.Constants
 import com.example.githubissuetracker.R
-import com.example.githubissuetracker.databinding.ActivityGithubIssueBinding
+import com.example.githubissuetracker.databinding.ActivityRepositoryBinding
+import com.example.githubissuetracker.ui.GitHubIssueActivity
+import com.example.githubissuetracker.ui.GitHubViewModel
 import com.example.githubissuetracker.utils.GenericLoadStateAdapter
+import com.example.githubissuetracker.utils.RecyclerViewItemDecoration
 import com.example.githubissuetracker.utils.hideKeyboard
 import com.example.githubissuetracker.utils.openActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,28 +20,30 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class GitHubIssueActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityGithubIssueBinding
-    private var fullRepoName = ""
-    private var repoName = ""
-    private val gitHubIssueAdapter by lazy {
-        GithubIssueAdapter { item ->
-            openActivity<GitHubIssueDetailsActivity> {
-                putExtra(Constants.GITHUB_ISSUES_ITEM, item)
+class RepositoryActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityRepositoryBinding
+    private val viewModel: GitHubViewModel by viewModels()
+
+    private val gitHubRepositoryAdapter by lazy {
+        GitHubRepositoryAdapter { item ->
+            openActivity<GitHubIssueActivity> {
+                putExtra(Constants.FULL_REPO_NAME, item.fullName ?: "")
+                putExtra(Constants.REPO_NAME, item.name ?: "")
             }
         }
     }
+
     private val headerAdapter by lazy {
-        GenericLoadStateAdapter { gitHubIssueAdapter.retry() }
+        GenericLoadStateAdapter { gitHubRepositoryAdapter.retry() }
     }
     private val footerAdapter by lazy {
-        GenericLoadStateAdapter { gitHubIssueAdapter.retry() }
+        GenericLoadStateAdapter { gitHubRepositoryAdapter.retry() }
     }
-    private val viewModel: GitHubViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityGithubIssueBinding.inflate(layoutInflater)
         //enableEdgeToEdge()
+        binding = ActivityRepositoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
         /*ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -53,12 +57,10 @@ class GitHubIssueActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        fullRepoName = intent.getStringExtra(Constants.FULL_REPO_NAME) ?: ""
-        repoName = intent.getStringExtra(Constants.REPO_NAME) ?: ""
-        binding.issueListText.text = getString(R.string.issue_list, repoName)
         binding.apply {
+            repositoryListText.text = getString(R.string.repository_list, Constants.FLUTTER)
             // Set up RecyclerView adapter with header and footer
-            recyclerview.adapter = gitHubIssueAdapter.withLoadStateHeaderAndFooter(
+            recyclerview.adapter = gitHubRepositoryAdapter.withLoadStateHeaderAndFooter(
                 header = headerAdapter,
                 footer = footerAdapter
             )
@@ -68,7 +70,7 @@ class GitHubIssueActivity : AppCompatActivity() {
             recyclerview.addItemDecoration(customDivider)
 
             lifecycleScope.launch {
-                gitHubIssueAdapter.loadStateFlow.collectLatest { combinedLoadState ->
+                gitHubRepositoryAdapter.loadStateFlow.collectLatest { combinedLoadState ->
                     val refreshState = combinedLoadState.refresh
                     val isLoading = refreshState is LoadState.Loading
                     val isNotLoading = refreshState is LoadState.NotLoading
@@ -77,7 +79,7 @@ class GitHubIssueActivity : AppCompatActivity() {
                     // Handle visibility
                     progressBar.isVisible = isLoading
                     recyclerview.isVisible = isNotLoading
-                    binding.noIssuesAvailable.isVisible = isNotLoading && gitHubIssueAdapter.itemCount == 0
+                    binding.noRepositoriesFound.isVisible = isNotLoading && gitHubRepositoryAdapter.itemCount == 0
 
                     // Handle error state and retry layout visibility
                     binding.layoutRetry.root.isVisible = isError
@@ -89,17 +91,19 @@ class GitHubIssueActivity : AppCompatActivity() {
 
             }
         }
-
     }
 
     private fun fetchData() {
-        val queryText = binding.edtSearch.text.trim().toString()
+        var queryText = binding.edtSearch.text.trim().toString()
+        if (queryText.isEmpty()) queryText = Constants.FLUTTER
+        binding.repositoryListText.text = getString(R.string.repository_list, queryText)
         lifecycleScope.launch {
-            viewModel.getGithubIssues(queryText, fullRepoName).collect { pagingData ->
-                gitHubIssueAdapter.submitData(pagingData)
+            viewModel.getGitHubRepository(queryText).collect { pagingData ->
+                gitHubRepositoryAdapter.submitData(pagingData)
             }
         }
     }
+
     private fun initListeners() {
         binding.apply {
             btnSearchIcon.setOnClickListener {
@@ -109,11 +113,7 @@ class GitHubIssueActivity : AppCompatActivity() {
             }
 
             layoutRetry.btnRetry.setOnClickListener {
-                gitHubIssueAdapter.retry()
-            }
-
-            backBtn.setOnClickListener {
-                finish()
+                gitHubRepositoryAdapter.retry()
             }
         }
     }

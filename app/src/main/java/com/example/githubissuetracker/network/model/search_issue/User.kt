@@ -1,8 +1,11 @@
 package com.example.githubissuetracker.network.model.search_issue
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class User(
     @SerializedName("avatar_url")
     val avatarUrl: String?,
@@ -40,4 +43,4 @@ data class User(
     val type: String?,
     @SerializedName("url")
     val url: String?
-)
+) : Parcelable

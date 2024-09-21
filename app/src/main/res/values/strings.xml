@@ -7,4 +7,17 @@
     <string name="search_all_issues">Search all issues</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="issue_body"><![CDATA[### Steps to reproduce\n\n1. use shell routes and try to navigate from ```/shell-one/page-one``` to ```/shell-two/page-two```r\n2. inspect the GoRouterState provided to ```page-one``` and ```page-two``` before/during/after the transitionr\n3. the build function will run for ```page-one``` and ```page-two``` during the transation\n\n### Expected results\n\ncorrect GoRouteState for ```page-one``` and ```page-two``` respectively during each build run\n\n### Actual results\n\ncurrently, the ```page-one``` will be built during and even a short time after the transition, that seems fine as the widget transitions out (fade for me).r\nr\n*BUT* the values ```page-one``` receives during this time are suddenly messed up. Specificially, it the _CustomNavigator currently uses latest matchList (which is for ```page-two``` already) while rendering ```page-one```. [_CustomNavigatorState._buildPageForGoRoute] then uses this matchList to create the state for ```page-one```.r\nr\nThe result is a ```GoRouterState``` with all values incorrect that rely on the RouteMatchList. So ```matchedLocation, pageKey, name, path``` are correct, while ```fullPath, pathParamters, extra, topRoute``` suddenly changed.\n\n### Code sample\n\nhere is the fix: https://github.com/quaaantumdev/packages/commit/f88802ed8aba1be843d68976dc4c92f7e1f9ca79r\n\n\n### Screenshots or Video\n\n_No response_\n\n### Logs\n\n_No response_\n\n### Flutter Doctor output\n\n<details open><summary>Doctor output</summary>r\nr\n```consoler\nDoctor summary (to see all details, run flutter doctor -v):r\n[√] Flutter (Channel stable, 3.24.3, on Microsoft Windows [Version 10.0.19045.4894], locale en-GB)r\n[√] Windows Version (Installed version of Windows is version 10 or higher)r\n[√] Android toolchain - develop for Android devices (Android SDK version 34.0.0)r\n[√] Chrome - develop for the webr\n[√] Visual Studio - develop Windows apps (Visual Studio Build Tools 2019 16.11.32)r\n[√] Android Studio (version 2023.3)r\n[√] VS Code (version 1.93.1)r\n[√] Connected device (4 available)r\n[√] Network resourcesr\nr\n• No issues found!r\n```r\nr\n</details>r\n]]></string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="lets_try_again">Don\'t worry. Let\'s try again.</string>
+    <string name="try_again">Try Again</string>
+    <string name="no_issues_available">No issues available</string>
+    <string name="no_repositories_available">No repositories available</string>
+    <string name="search_all_repositories">Search all repositories</string>
+    <string name="issue_details">Issue Details</string>
+    <string name="issue_state">State: %1$s</string>
+    <string name="issue_comments">Comments: %1$d</string>
+    <string name="issue_created_at">Created At: %1$s</string>
+    <string name="issue_list">Issue List: %1$s</string>
+    <string name="repository_list">Repository List: %1$s</string>
 </resources>

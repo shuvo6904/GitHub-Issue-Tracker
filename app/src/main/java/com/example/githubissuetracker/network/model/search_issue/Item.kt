@@ -1,11 +1,12 @@
 package com.example.githubissuetracker.network.model.search_issue
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Item(
-    @SerializedName("active_lock_reason")
-    val activeLockReason: Any?,
     @SerializedName("assignee")
     val assignee: Assignee?,
     @SerializedName("assignees")
@@ -34,16 +35,10 @@ data class Item(
     val labelsUrl: String?,
     @SerializedName("locked")
     val locked: Boolean?,
-    @SerializedName("milestone")
-    val milestone: Any?,
     @SerializedName("node_id")
     val nodeId: String?,
     @SerializedName("number")
     val number: Int?,
-    @SerializedName("performed_via_github_app")
-    val performedViaGithubApp: Any?,
-    @SerializedName("reactions")
-    val reactions: Reactions?,
     @SerializedName("repository_url")
     val repositoryUrl: String?,
     @SerializedName("score")
@@ -62,4 +57,4 @@ data class Item(
     val url: String?,
     @SerializedName("user")
     val user: User?
-)
+): Parcelable
