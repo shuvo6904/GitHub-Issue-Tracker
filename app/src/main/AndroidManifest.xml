@@ -17,8 +17,9 @@
         android:theme="@style/Theme.GitHubIssueTracker"
         tools:targetApi="31">
         <activity
-            android:name=".ui.repository.RepositoryActivity"
-            android:exported="true">
+            android:name=".ui.github_repository.RepositoryActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MySplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,10 +27,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.GitHubIssueDetailsActivity"
+            android:name=".ui.github_issue_details.GitHubIssueDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.GitHubIssueActivity"
+            android:name=".ui.github_issue.GitHubIssueActivity"
             android:exported="false"/>
     </application>
 

@@ -1,4 +1,4 @@
-package com.example.githubissuetracker.ui.repository
+package com.example.githubissuetracker.ui.github_repository
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState

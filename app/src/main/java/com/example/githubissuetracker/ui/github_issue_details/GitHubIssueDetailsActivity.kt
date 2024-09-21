@@ -1,8 +1,8 @@
-package com.example.githubissuetracker.ui
+package com.example.githubissuetracker.ui.github_issue_details
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.githubissuetracker.Constants
+import com.example.githubissuetracker.utils.Constants
 import com.example.githubissuetracker.R
 import com.example.githubissuetracker.databinding.ActivityGitHubIssueDetailsBinding
 import com.example.githubissuetracker.network.model.github_issue.Item

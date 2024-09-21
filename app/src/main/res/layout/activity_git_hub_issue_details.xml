@@ -32,8 +32,8 @@
             tools:text="Issue Details"
             android:textColor="@android:color/white"
             android:gravity="center_vertical"
-            android:textSize="@dimen/_12ssp"
-            android:fontFamily="@font/roboto_medium"
+            android:textSize="@dimen/_14ssp"
+            android:fontFamily="@font/roboto_bold"
             android:maxLines="1"
             android:ellipsize="end"
             android:layout_marginStart="@dimen/_5sdp"
@@ -50,7 +50,7 @@
         android:layout_marginHorizontal="@dimen/_12sdp"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:context=".ui.GitHubIssueDetailsActivity">
+        tools:context=".ui.github_issue_details.GitHubIssueDetailsActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -62,8 +62,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:fontFamily="@font/roboto_bold"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/soft_red"
+                android:textSize="@dimen/_16ssp"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="mac-14 lost external connection from phone device." />
 
@@ -71,7 +71,7 @@
                 android:id="@+id/profileImage"
                 android:layout_width="@dimen/_100sdp"
                 android:layout_height="@dimen/_100sdp"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/title"
@@ -93,10 +93,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
-                    android:fontFamily="@font/roboto_medium"
+                    android:fontFamily="@font/roboto_bold"
                     android:maxLines="1"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/light_gray"
+                    android:textSize="@dimen/_14ssp"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="kentnguyen99" />
 
@@ -140,15 +140,22 @@
                     tools:text="Created At: 2024-09-20" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <View
+                android:id="@+id/divider"
+                android:background="@drawable/item_divider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_2sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                app:layout_constraintTop_toBottomOf="@+id/profileImage"/>
             <TextView
                 android:id="@+id/body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/roboto_medium"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/_12ssp"
-                app:layout_constraintTop_toBottomOf="@+id/profileImage"
+                app:layout_constraintTop_toBottomOf="@+id/divider"
                 tools:text="@string/issue_body" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

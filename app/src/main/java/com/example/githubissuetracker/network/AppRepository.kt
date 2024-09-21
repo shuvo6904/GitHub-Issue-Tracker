@@ -2,9 +2,9 @@ package com.example.githubissuetracker.network
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import com.example.githubissuetracker.Constants
-import com.example.githubissuetracker.ui.GitHubIssuePagingSource
-import com.example.githubissuetracker.ui.repository.GitHubRepositoryPagingSource
+import com.example.githubissuetracker.utils.Constants
+import com.example.githubissuetracker.ui.github_issue.GitHubIssuePagingSource
+import com.example.githubissuetracker.ui.github_repository.GitHubRepositoryPagingSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject

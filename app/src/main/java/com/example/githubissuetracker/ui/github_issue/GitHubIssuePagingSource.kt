@@ -1,8 +1,8 @@
-package com.example.githubissuetracker.ui
+package com.example.githubissuetracker.ui.github_issue
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.githubissuetracker.Constants
+import com.example.githubissuetracker.utils.Constants
 import com.example.githubissuetracker.network.GitHubApiService
 import com.example.githubissuetracker.network.model.github_issue.Item
 

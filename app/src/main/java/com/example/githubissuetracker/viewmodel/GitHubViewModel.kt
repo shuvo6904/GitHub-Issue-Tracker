@@ -1,4 +1,4 @@
-package com.example.githubissuetracker.ui
+package com.example.githubissuetracker.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

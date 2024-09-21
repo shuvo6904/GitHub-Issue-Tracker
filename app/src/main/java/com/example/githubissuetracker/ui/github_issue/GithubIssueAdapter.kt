@@ -1,4 +1,4 @@
-package com.example.githubissuetracker.ui
+package com.example.githubissuetracker.ui.github_issue
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

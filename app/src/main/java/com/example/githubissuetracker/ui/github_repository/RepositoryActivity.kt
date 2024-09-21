@@ -1,16 +1,17 @@
-package com.example.githubissuetracker.ui.repository
+package com.example.githubissuetracker.ui.github_repository
 
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
-import com.example.githubissuetracker.Constants
+import com.example.githubissuetracker.utils.Constants
 import com.example.githubissuetracker.R
 import com.example.githubissuetracker.databinding.ActivityRepositoryBinding
-import com.example.githubissuetracker.ui.GitHubIssueActivity
-import com.example.githubissuetracker.ui.GitHubViewModel
+import com.example.githubissuetracker.ui.github_issue.GitHubIssueActivity
+import com.example.githubissuetracker.viewmodel.GitHubViewModel
 import com.example.githubissuetracker.utils.GenericLoadStateAdapter
 import com.example.githubissuetracker.utils.RecyclerViewItemDecoration
 import com.example.githubissuetracker.utils.hideKeyboard
@@ -42,6 +43,7 @@ class RepositoryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen()
         //enableEdgeToEdge()
         binding = ActivityRepositoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -66,7 +68,7 @@ class RepositoryActivity : AppCompatActivity() {
             )
 
             // Add a custom divider RecyclerViewItemDecoration
-            val customDivider = RecyclerViewItemDecoration(recyclerview.context, R.drawable.divider_github_issue_rv)
+            val customDivider = RecyclerViewItemDecoration(recyclerview.context, R.drawable.item_divider)
             recyclerview.addItemDecoration(customDivider)
 
             lifecycleScope.launch {
@@ -79,13 +81,13 @@ class RepositoryActivity : AppCompatActivity() {
                     // Handle visibility
                     progressBar.isVisible = isLoading
                     recyclerview.isVisible = isNotLoading
-                    binding.noRepositoriesFound.isVisible = isNotLoading && gitHubRepositoryAdapter.itemCount == 0
+                    noRepositoriesFound.isVisible = isNotLoading && gitHubRepositoryAdapter.itemCount == 0
 
                     // Handle error state and retry layout visibility
-                    binding.layoutRetry.root.isVisible = isError
+                    layoutRetry.root.isVisible = isError
                     if (isError) {
                         val error = (refreshState as LoadState.Error).error
-                        binding.layoutRetry.errorText.text = error.message
+                        layoutRetry.errorText.text = error.message
                     }
                 }
 

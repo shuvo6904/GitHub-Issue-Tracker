@@ -1,4 +1,4 @@
-package com.example.githubissuetracker.ui
+package com.example.githubissuetracker.ui.github_issue
 
 import com.example.githubissuetracker.utils.RecyclerViewItemDecoration
 import android.os.Bundle
@@ -7,9 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
-import com.example.githubissuetracker.Constants
+import com.example.githubissuetracker.utils.Constants
 import com.example.githubissuetracker.R
 import com.example.githubissuetracker.databinding.ActivityGithubIssueBinding
+import com.example.githubissuetracker.ui.github_issue_details.GitHubIssueDetailsActivity
+import com.example.githubissuetracker.viewmodel.GitHubViewModel
 import com.example.githubissuetracker.utils.GenericLoadStateAdapter
 import com.example.githubissuetracker.utils.hideKeyboard
 import com.example.githubissuetracker.utils.openActivity
@@ -64,7 +66,7 @@ class GitHubIssueActivity : AppCompatActivity() {
             )
 
             // Add a custom divider RecyclerViewItemDecoration
-            val customDivider = RecyclerViewItemDecoration(recyclerview.context, R.drawable.divider_github_issue_rv)
+            val customDivider = RecyclerViewItemDecoration(recyclerview.context, R.drawable.item_divider)
             recyclerview.addItemDecoration(customDivider)
 
             lifecycleScope.launch {
@@ -77,13 +79,13 @@ class GitHubIssueActivity : AppCompatActivity() {
                     // Handle visibility
                     progressBar.isVisible = isLoading
                     recyclerview.isVisible = isNotLoading
-                    binding.noIssuesAvailable.isVisible = isNotLoading && gitHubIssueAdapter.itemCount == 0
+                    noIssuesAvailable.isVisible = isNotLoading && gitHubIssueAdapter.itemCount == 0
 
                     // Handle error state and retry layout visibility
-                    binding.layoutRetry.root.isVisible = isError
+                    layoutRetry.root.isVisible = isError
                     if (isError) {
                         val error = (refreshState as LoadState.Error).error
-                        binding.layoutRetry.errorText.text = error.message
+                        layoutRetry.errorText.text = error.message
                     }
                 }
 

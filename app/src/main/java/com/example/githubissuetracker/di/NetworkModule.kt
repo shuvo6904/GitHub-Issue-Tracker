@@ -1,6 +1,6 @@
 package com.example.githubissuetracker.di
 
-import com.example.githubissuetracker.Constants
+import com.example.githubissuetracker.utils.Constants
 import com.example.githubissuetracker.network.GitHubApiService
 import dagger.Module
 import dagger.Provides
@@ -43,7 +43,7 @@ object NetworkModule {
         authInterceptor: Interceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(authInterceptor)
+            //.addInterceptor(authInterceptor)
             .addInterceptor(loggingInterceptor)
             .callTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(15, TimeUnit.SECONDS)
