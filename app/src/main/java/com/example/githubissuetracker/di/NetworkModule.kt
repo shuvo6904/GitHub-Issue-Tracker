@@ -31,6 +31,7 @@ object NetworkModule {
         return Interceptor { chain ->
             val originalRequest = chain.request()
             val newRequest = originalRequest.newBuilder()
+                .addHeader("Authorization", "Bearer ${Constants.GITHUB_PERSONAL_TOKEN}")
                 .build()
             chain.proceed(newRequest)
         }
