@@ -2,10 +2,14 @@ package com.example.githubissuetracker.ui.github_issue
 
 import com.example.githubissuetracker.utils.RecyclerViewItemDecoration
 import android.os.Bundle
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
 import com.example.githubissuetracker.utils.Constants
 import com.example.githubissuetracker.R
@@ -44,6 +48,7 @@ class GitHubIssueActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initViews()
+        observeLoadStateFlow()
         fetchData()
         initListeners()
     }
@@ -63,30 +68,36 @@ class GitHubIssueActivity : AppCompatActivity() {
             val customDivider =
                 RecyclerViewItemDecoration(recyclerview.context, R.drawable.item_divider)
             recyclerview.addItemDecoration(customDivider)
-
-            lifecycleScope.launch {
-                gitHubIssueAdapter.loadStateFlow.collectLatest { combinedLoadState ->
-                    val refreshState = combinedLoadState.refresh
-                    val isLoading = refreshState is LoadState.Loading
-                    val isNotLoading = refreshState is LoadState.NotLoading
-                    val isError = refreshState is LoadState.Error
-
-                    // Handle visibility
-                    progressBar.isVisible = isLoading
-                    recyclerview.isVisible = isNotLoading
-                    noIssuesAvailable.isVisible = isNotLoading && gitHubIssueAdapter.itemCount == 0
-
-                    // Handle error state and retry layout visibility
-                    layoutRetry.root.isVisible = isError
-                    if (isError) {
-                        val error = (refreshState as LoadState.Error).error
-                        layoutRetry.errorText.text = error.message
-                    }
-                }
-
-            }
         }
 
+    }
+
+    private fun observeLoadStateFlow() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                gitHubIssueAdapter.loadStateFlow.collectLatest { combinedLoadState ->
+                    binding.apply {
+                        val refreshState = combinedLoadState.refresh
+                        val isLoading = refreshState is LoadState.Loading
+                        val isNotLoading = refreshState is LoadState.NotLoading
+                        val isError = refreshState is LoadState.Error
+
+                        // Handle visibility
+                        progressBar.isVisible = isLoading
+                        recyclerview.isVisible = isNotLoading
+                        noIssuesAvailable.isVisible = isNotLoading && gitHubIssueAdapter.itemCount == 0
+
+                        // Handle error state and retry layout visibility
+                        layoutRetry.root.isVisible = isError
+                        if (isError) {
+                            val error = (refreshState as LoadState.Error).error
+                            layoutRetry.errorText.text = error.message
+                        }
+                    }
+                }
+            }
+
+        }
     }
 
     private fun fetchData() {
@@ -114,6 +125,14 @@ class GitHubIssueActivity : AppCompatActivity() {
             backBtn.setOnClickListener {
                 finish()
             }
+
+            edtSearch.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    binding.btnSearchIcon.performClick()
+                    return@OnEditorActionListener true
+                }
+                false
+            })
         }
     }
 }

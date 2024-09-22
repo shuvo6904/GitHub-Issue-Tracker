@@ -1,11 +1,15 @@
 package com.example.githubissuetracker.ui.github_repository
 
 import android.os.Bundle
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
 import com.example.githubissuetracker.utils.Constants
 import com.example.githubissuetracker.R
@@ -48,6 +52,7 @@ class RepositoryActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initViews()
+        observeLoadStateFlow()
         fetchData()
         initListeners()
     }
@@ -65,29 +70,35 @@ class RepositoryActivity : AppCompatActivity() {
             val customDivider =
                 RecyclerViewItemDecoration(recyclerview.context, R.drawable.item_divider)
             recyclerview.addItemDecoration(customDivider)
+        }
+    }
 
-            lifecycleScope.launch {
+    private fun observeLoadStateFlow() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 gitHubRepositoryAdapter.loadStateFlow.collectLatest { combinedLoadState ->
-                    val refreshState = combinedLoadState.refresh
-                    val isLoading = refreshState is LoadState.Loading
-                    val isNotLoading = refreshState is LoadState.NotLoading
-                    val isError = refreshState is LoadState.Error
+                    binding.apply {
+                        val refreshState = combinedLoadState.refresh
+                        val isLoading = refreshState is LoadState.Loading
+                        val isNotLoading = refreshState is LoadState.NotLoading
+                        val isError = refreshState is LoadState.Error
 
-                    // Handle visibility
-                    progressBar.isVisible = isLoading
-                    recyclerview.isVisible = isNotLoading
-                    noRepositoriesFound.isVisible =
-                        isNotLoading && gitHubRepositoryAdapter.itemCount == 0
+                        // Handle visibility
+                        progressBar.isVisible = isLoading
+                        recyclerview.isVisible = isNotLoading
+                        noRepositoriesFound.isVisible =
+                            isNotLoading && gitHubRepositoryAdapter.itemCount == 0
 
-                    // Handle error state and retry layout visibility
-                    layoutRetry.root.isVisible = isError
-                    if (isError) {
-                        val error = (refreshState as LoadState.Error).error
-                        layoutRetry.errorText.text = error.message
+                        // Handle error state and retry layout visibility
+                        layoutRetry.root.isVisible = isError
+                        if (isError) {
+                            val error = (refreshState as LoadState.Error).error
+                            layoutRetry.errorText.text = error.message
+                        }
                     }
                 }
-
             }
+
         }
     }
 
@@ -114,6 +125,14 @@ class RepositoryActivity : AppCompatActivity() {
             layoutRetry.btnRetry.setOnClickListener {
                 gitHubRepositoryAdapter.retry()
             }
+
+            edtSearch.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    binding.btnSearchIcon.performClick()
+                    return@OnEditorActionListener true
+                }
+                false
+            })
         }
     }
 }
