@@ -15,9 +15,7 @@ data class GitHubRepositoryResponse(
         @SerializedName("full_name")
         val fullName: String? = null,
         @SerializedName("owner")
-        val owner: Owner? = null,
-        @SerializedName("created_at")
-        val createdAt: String? = null
+        val owner: Owner? = null
     ) {
         data class Owner(
             @SerializedName("login")
